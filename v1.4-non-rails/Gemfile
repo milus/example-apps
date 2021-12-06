@@ -12,6 +12,7 @@ gem 'karafka', '~> 1.4'
 gem 'karafka-sidekiq-backend', '~> 1.4'
 
 group :development, :test do
+  gem 'pry'
   gem 'byebug', platform: :ruby
   gem 'karafka-testing', '~> 1.4'
   gem 'rspec'

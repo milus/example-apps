@@ -60,25 +60,25 @@ Karafka.monitor.subscribe(Karafka::Instrumentation::ProctitleListener.new)
 
 # Consumer group defined with the 0.6+ routing style (recommended)
 App.consumer_groups.draw do
-  consumer_group :batched_group do
-    batch_fetching true
+  # consumer_group :batched_group do
+  #   batch_fetching true
 
-    topic :xml_data do
-      consumer XmlMessagesConsumer
-      batch_consuming false
-      deserializer XmlDeserializer.new
-    end
+  #   topic :xml_data do
+  #     consumer XmlMessagesConsumer
+  #     batch_consuming false
+  #     deserializer XmlDeserializer.new
+  #   end
 
-    topic :inline_batch_data do
-      consumer InlineBatchConsumer
-      batch_consuming true
-    end
+  #   topic :inline_batch_data do
+  #     consumer InlineBatchConsumer
+  #     batch_consuming true
+  #   end
 
-    topic :callbacked_data do
-      consumer CallbackedConsumer
-      batch_consuming true
-    end
-  end
+  #   topic :callbacked_data do
+  #     consumer CallbackedConsumer
+  #     batch_consuming true
+  #   end
+  # end
 
   # A ping-pong implementation using karafka-sidekiq backend
   # @note The backend is totally optional, if you disable it, the game will
@@ -86,13 +86,12 @@ App.consumer_groups.draw do
   consumer_group :async_pong do
     topic :ping do
       consumer Pong::PingConsumer
-      backend :sidekiq
+      batch_consuming false
+
+      start_from_beginning false
     end
 
-    topic :pong do
-      consumer Pong::PongConsumer
-      backend :sidekiq
-    end
+
   end
 end
 
